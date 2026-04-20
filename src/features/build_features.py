@@ -108,16 +108,23 @@ def transform_feature_pipeline(df_features: pd.DataFrame, feature_artifact: dict
     outlier_limits = feature_artifact["outlier_limits"]
     scaler = feature_artifact["scaler"]
 
-    filtered = df_features.copy()
+    transformed = df_features.copy()
 
+    # Em inferência, capamos os valores extremos em vez de remover observações
     for col in outlier_columns:
         upper_limit = outlier_limits[col]
-        filtered = filtered[filtered[col] <= upper_limit]
-
-    transformed = filtered.copy()
+        transformed[col] = transformed[col].clip(upper=upper_limit)
 
     for col in feature_columns:
         transformed[col] = np.log1p(transformed[col])
+
+    transformed = transformed.replace([np.inf, -np.inf], np.nan).dropna(subset=feature_columns).copy()
+
+    if transformed.empty:
+        raise ValueError(
+            "Nenhuma observação restou após aplicar as transformações de inferência. "
+            "Verifique se a base nova contém dados válidos para gerar as features."
+        )
 
     scaled_array = scaler.transform(transformed[feature_columns])
 

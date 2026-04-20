@@ -14,7 +14,10 @@ def prepare_new_data(df_features: pd.DataFrame, artifact: dict) -> pd.DataFrame:
     X = X.reindex(columns=artifact["feature_columns"])
 
     if X.isnull().any().any():
-        raise ValueError("A base de entrada contém colunas ausentes ou valores nulos após o alinhamento.")
+        missing_cols = X.columns[X.isnull().any()].tolist()
+        raise ValueError(
+            f"A base de entrada contém valores nulos após alinhamento. Verifique: {missing_cols}"
+        )
 
     return X
 
