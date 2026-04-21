@@ -130,10 +130,18 @@ Exemplo de segmentos que espera-se encontrar:
 - Scikit-learn
 - Matplotlib / Seaborn
 
+## 🚀 Pipeline do modelo em produção
+
+1. Executar main.py, responsável por ler a base de dados crua, fazer o pré-processamento e gerar a base tratada que treinará o modelo;
+2. O arquivo src/models/predict.py é responsável por realizar as predições em produção;
+3. Para testes isolados, executar o arquivo src/models/test_predict.py. O csv dos clientes para realizar a predição, deve ser salvo como o path: data/raw/clients_to_predict.csv. Os resultados estarão presentes em data/predictions/clients_to_predict.csv
+
 ---
 
 ## 🔮 Próximos Passos
 
-- Testar outros algoritmos (DBSCAN, Hierarchical Clustering)
+- Conseguir coletar mais dados ou dados de maior qualidade
+- Realizei testes rápidos com outros modelos, e o resultado também não foram satisfatórios, o K-means teve até melhor desempenho
+- Uma outra alternativa seria trabalhar mais em cima dos dados já existente, explorando novas features e maior tratamento/pré-processamento dos dados
 
 ---

@@ -65,7 +65,7 @@ if __name__ == "__main__":
     project_root = Path(__file__).resolve().parents[2]
 
     input_path = project_root / "data" / "raw" / "clients_to_cluster.xlsx"
-    output_path = project_root / "predictions" / "clients_clustered.csv"
+    output_path = project_root / "data" / "predictions" / "clients_clustered.csv"
     artifact_path = project_root / "models" / "kmeans_artifact.pkl"
 
     result = run_test_prediction(input_path, output_path, artifact_path)
